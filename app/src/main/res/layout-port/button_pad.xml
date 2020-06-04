@@ -1,0 +1,327 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_margin="10dp"
+    tools:showIn="@layout/activity_main"
+    tools:ignore="MissingDefaultResource">
+
+    <Button
+        android:id="@+id/memoryClearBtnId"
+        style="@android:style/Widget.DeviceDefault.Button"
+        app:layout_constraintBaseline_toBaselineOf="@id/memoryRestoreBtnId"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/memoryPlusBtnId"
+        android:layout_width="@dimen/button_width"
+        android:layout_height="@dimen/button_height"
+        android:layout_margin="@dimen/button_margin"
+        android:backgroundTint="@color/colorActionBtn"
+        android:text="@string/memory_clear"
+        android:textSize="@dimen/button_text_size"
+        android:textAllCaps="false" />
+
+    <Button
+        android:id="@+id/memoryPlusBtnId"
+        style="@android:style/Widget.DeviceDefault.Button"
+        app:layout_constraintBaseline_toBaselineOf="@id/memoryRestoreBtnId"
+        app:layout_constraintStart_toEndOf="@id/memoryClearBtnId"
+        app:layout_constraintEnd_toStartOf="@id/memoryMinusBtnId"
+        android:layout_width="@dimen/button_width"
+        android:layout_height="@dimen/button_height"
+        android:layout_margin="@dimen/button_margin"
+        android:backgroundTint="@color/colorActionBtn"
+        android:text="@string/memori_plus"
+        android:textSize="@dimen/button_text_size"
+        android:textAllCaps="false" />
+
+    <Button
+        android:id="@+id/memoryMinusBtnId"
+        style="@android:style/Widget.DeviceDefault.Button"
+        app:layout_constraintBaseline_toBaselineOf="@id/memoryRestoreBtnId"
+        app:layout_constraintStart_toEndOf="@id/memoryPlusBtnId"
+        app:layout_constraintEnd_toStartOf="@id/memoryRestoreBtnId"
+        android:layout_width="@dimen/button_width"
+        android:layout_height="@dimen/button_height"
+        android:layout_margin="@dimen/button_margin"
+        android:backgroundTint="@color/colorActionBtn"
+        android:text="@string/memory_minus"
+        android:textSize="@dimen/button_text_size"
+        android:textAllCaps="false" />
+
+    <Button
+        android:id="@+id/memoryRestoreBtnId"
+        style="@android:style/Widget.DeviceDefault.Button"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/divBtnId"
+        app:layout_constraintStart_toEndOf="@id/memoryMinusBtnId"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_width="@dimen/button_width"
+        android:layout_height="@dimen/button_height"
+        android:layout_margin="@dimen/button_margin"
+        android:backgroundTint="@color/colorActionBtn"
+        android:text="@string/memory_restore"
+        android:textSize="@dimen/button_text_size"
+        android:textAllCaps="false" />
+
+    <Button
+        android:id="@+id/clearBtnId"
+        style="@android:style/Widget.DeviceDefault.Button"
+        app:layout_constraintBaseline_toBaselineOf="@id/divBtnId"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/signBtnId"
+        android:layout_width="@dimen/button_width"
+        android:layout_height="@dimen/button_height"
+        android:layout_margin="@dimen/button_margin"
+        android:backgroundTint="@color/colorActionBtn"
+        android:text="@string/clear"
+        android:textSize="@dimen/button_text_size" />
+
+    <Button
+        android:id="@+id/signBtnId"
+        style="@android:style/Widget.DeviceDefault.Button"
+        app:layout_constraintBaseline_toBaselineOf="@id/divBtnId"
+        app:layout_constraintStart_toEndOf="@id/clearBtnId"
+        app:layout_constraintEnd_toStartOf="@id/percentBtnId"
+        android:layout_width="@dimen/button_width"
+        android:layout_height="@dimen/button_height"
+        android:layout_margin="@dimen/button_margin"
+        android:backgroundTint="@color/colorActionBtn"
+        android:text="@string/sign"
+        android:textSize="@dimen/button_text_size" />
+
+    <Button
+        android:id="@+id/percentBtnId"
+        style="@android:style/Widget.DeviceDefault.Button"
+        app:layout_constraintBaseline_toBaselineOf="@id/divBtnId"
+        app:layout_constraintStart_toEndOf="@id/signBtnId"
+        app:layout_constraintEnd_toStartOf="@id/divBtnId"
+        android:layout_width="@dimen/button_width"
+        android:layout_height="@dimen/button_height"
+        android:layout_margin="@dimen/button_margin"
+        android:backgroundTint="@color/colorActionBtn"
+        android:text="@string/percent"
+        android:textSize="@dimen/button_text_size" />
+
+    <Button
+        android:id="@+id/divBtnId"
+        style="@android:style/Widget.DeviceDefault.Button"
+        app:layout_constraintHorizontal_chainStyle="spread"
+        app:layout_constraintVertical_chainStyle="spread"
+        app:layout_constraintTop_toBottomOf="@id/memoryRestoreBtnId"
+        app:layout_constraintBottom_toTopOf="@id/mulBtnId"
+        app:layout_constraintStart_toEndOf="@id/percentBtnId"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_width="@dimen/button_width"
+        android:layout_height="@dimen/button_height"
+        android:layout_margin="@dimen/button_margin"
+        android:backgroundTint="@color/colorActionBtn"
+        android:text="@string/div"
+        android:textSize="@dimen/button_text_size" />
+
+    <Button
+        android:id="@+id/sevenBtnId"
+        style="@android:style/Widget.DeviceDefault.Button"
+        app:layout_constraintBaseline_toBaselineOf="@id/mulBtnId"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/eightBtnId"
+        android:layout_width="@dimen/button_width"
+        android:layout_height="@dimen/button_height"
+        android:layout_margin="@dimen/button_margin"
+        android:backgroundTint="@color/colorNumBtn"
+        android:text="@string/seven"
+        android:textSize="@dimen/button_text_size" />
+
+    <Button
+        android:id="@+id/eightBtnId"
+        style="@android:style/Widget.DeviceDefault.Button"
+        app:layout_constraintBaseline_toBaselineOf="@id/mulBtnId"
+        app:layout_constraintStart_toEndOf="@id/sevenBtnId"
+        app:layout_constraintEnd_toStartOf="@id/nineBtnId"
+        android:layout_width="@dimen/button_width"
+        android:layout_height="@dimen/button_height"
+        android:layout_margin="@dimen/button_margin"
+        android:backgroundTint="@color/colorNumBtn"
+        android:text="@string/eight"
+        android:textSize="@dimen/button_text_size" />
+
+    <Button
+        android:id="@+id/nineBtnId"
+        style="@android:style/Widget.DeviceDefault.Button"
+        app:layout_constraintBaseline_toBaselineOf="@id/mulBtnId"
+        app:layout_constraintStart_toEndOf="@id/eightBtnId"
+        app:layout_constraintEnd_toStartOf="@id/mulBtnId"
+        android:layout_width="@dimen/button_width"
+        android:layout_height="@dimen/button_height"
+        android:layout_margin="@dimen/button_margin"
+        android:backgroundTint="@color/colorNumBtn"
+        android:text="@string/nine"
+        android:textSize="@dimen/button_text_size" />
+
+    <Button
+        android:id="@+id/mulBtnId"
+        style="@android:style/Widget.DeviceDefault.Button"
+        app:layout_constraintHorizontal_chainStyle="spread"
+        app:layout_constraintTop_toBottomOf="@id/divBtnId"
+        app:layout_constraintBottom_toTopOf="@id/subBtnId"
+        app:layout_constraintStart_toEndOf="@id/nineBtnId"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_width="@dimen/button_width"
+        android:layout_height="@dimen/button_height"
+        android:layout_margin="@dimen/button_margin"
+        android:backgroundTint="@color/colorActionBtn"
+        android:text="@string/mul"
+        android:textSize="@dimen/button_text_size" />
+
+    <Button
+        android:id="@+id/fourBtnId"
+        style="@android:style/Widget.DeviceDefault.Button"
+        app:layout_constraintBaseline_toBaselineOf="@id/subBtnId"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/fiveBtnId"
+        android:layout_width="@dimen/button_width"
+        android:layout_height="@dimen/button_height"
+        android:layout_margin="@dimen/button_margin"
+        android:backgroundTint="@color/colorNumBtn"
+        android:text="@string/four"
+        android:textSize="@dimen/button_text_size" />
+
+    <Button
+        android:id="@+id/fiveBtnId"
+        style="@android:style/Widget.DeviceDefault.Button"
+        app:layout_constraintBaseline_toBaselineOf="@id/subBtnId"
+        app:layout_constraintStart_toEndOf="@id/fourBtnId"
+        app:layout_constraintEnd_toStartOf="@id/sixBtnId"
+        android:layout_width="@dimen/button_width"
+        android:layout_height="@dimen/button_height"
+        android:layout_margin="@dimen/button_margin"
+        android:backgroundTint="@color/colorNumBtn"
+        android:text="@string/five"
+        android:textSize="@dimen/button_text_size" />
+
+    <Button
+        android:id="@+id/sixBtnId"
+        style="@android:style/Widget.DeviceDefault.Button"
+        app:layout_constraintBaseline_toBaselineOf="@id/subBtnId"
+        app:layout_constraintStart_toEndOf="@id/fiveBtnId"
+        app:layout_constraintEnd_toStartOf="@id/subBtnId"
+        android:layout_width="@dimen/button_width"
+        android:layout_height="@dimen/button_height"
+        android:layout_margin="@dimen/button_margin"
+        android:backgroundTint="@color/colorNumBtn"
+        android:text="@string/six"
+        android:textSize="@dimen/button_text_size" />
+
+    <Button
+        android:id="@+id/subBtnId"
+        style="@android:style/Widget.DeviceDefault.Button"
+        app:layout_constraintHorizontal_chainStyle="spread"
+        app:layout_constraintTop_toBottomOf="@id/mulBtnId"
+        app:layout_constraintBottom_toTopOf="@id/sumBtnId"
+        app:layout_constraintStart_toEndOf="@id/sixBtnId"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_width="@dimen/button_width"
+        android:layout_height="@dimen/button_height"
+        android:layout_margin="@dimen/button_margin"
+        android:backgroundTint="@color/colorActionBtn"
+        android:text="@string/sub"
+        android:textSize="@dimen/button_text_size" />
+
+    <Button
+        android:id="@+id/oneBtnId"
+        style="@android:style/Widget.DeviceDefault.Button"
+        app:layout_constraintBaseline_toBaselineOf="@id/sumBtnId"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/twoBtnId"
+        android:layout_width="@dimen/button_width"
+        android:layout_height="@dimen/button_height"
+        android:layout_margin="@dimen/button_margin"
+        android:backgroundTint="@color/colorNumBtn"
+        android:text="@string/one"
+        android:textSize="@dimen/button_text_size" />
+
+    <Button
+        android:id="@+id/twoBtnId"
+        style="@android:style/Widget.DeviceDefault.Button"
+        app:layout_constraintBaseline_toBaselineOf="@id/sumBtnId"
+        app:layout_constraintStart_toEndOf="@id/oneBtnId"
+        app:layout_constraintEnd_toStartOf="@id/threeBtnId"
+        android:layout_width="@dimen/button_width"
+        android:layout_height="@dimen/button_height"
+        android:layout_margin="@dimen/button_margin"
+        android:backgroundTint="@color/colorNumBtn"
+        android:text="@string/two"
+        android:textSize="@dimen/button_text_size" />
+
+    <Button
+        android:id="@+id/threeBtnId"
+        style="@android:style/Widget.DeviceDefault.Button"
+        app:layout_constraintBaseline_toBaselineOf="@id/sumBtnId"
+        app:layout_constraintStart_toEndOf="@id/twoBtnId"
+        app:layout_constraintEnd_toStartOf="@id/sumBtnId"
+        android:layout_width="@dimen/button_width"
+        android:layout_height="@dimen/button_height"
+        android:layout_margin="@dimen/button_margin"
+        android:backgroundTint="@color/colorNumBtn"
+        android:text="@string/three"
+        android:textSize="@dimen/button_text_size" />
+
+    <Button
+        android:id="@+id/sumBtnId"
+        style="@android:style/Widget.DeviceDefault.Button"
+        app:layout_constraintTop_toBottomOf="@id/subBtnId"
+        app:layout_constraintBottom_toTopOf="@id/equalBtnId"
+        app:layout_constraintStart_toEndOf="@id/threeBtnId"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_width="@dimen/button_width"
+        android:layout_height="@dimen/button_height"
+        android:layout_margin="@dimen/button_margin"
+        android:backgroundTint="@color/colorActionBtn"
+        android:text="@string/sum"
+        android:textSize="@dimen/button_text_size" />
+
+    <Button
+        android:id="@+id/zeroBtnId"
+        style="@android:style/Widget.DeviceDefault.Button"
+        app:layout_constraintBaseline_toBaselineOf="@id/equalBtnId"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/dotBtnId"
+        android:layout_width="@dimen/button_width"
+        android:layout_height="@dimen/button_height"
+        android:layout_margin="@dimen/button_margin"
+        android:backgroundTint="@color/colorNumBtn"
+        app:layout_constraintHorizontal_weight="2"
+        android:text="@string/zero"
+        android:textSize="@dimen/button_text_size" />
+
+    <Button
+        android:id="@+id/dotBtnId"
+        style="@android:style/Widget.DeviceDefault.Button"
+        app:layout_constraintBaseline_toBaselineOf="@id/equalBtnId"
+        app:layout_constraintStart_toEndOf="@id/zeroBtnId"
+        app:layout_constraintEnd_toStartOf="@id/equalBtnId"
+        android:layout_width="@dimen/button_width"
+        android:layout_height="@dimen/button_height"
+        android:layout_margin="@dimen/button_margin"
+        android:backgroundTint="@color/colorNumBtn"
+        app:layout_constraintHorizontal_weight="1"
+        android:text="@string/dot"
+        android:textSize="@dimen/button_text_size" />
+
+    <Button
+        android:id="@+id/equalBtnId"
+        style="@android:style/Widget.DeviceDefault.Button"
+        app:layout_constraintHorizontal_chainStyle="spread"
+        app:layout_constraintTop_toBottomOf="@id/sumBtnId"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@id/dotBtnId"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_width="@dimen/button_width"
+        android:layout_height="@dimen/button_height"
+        android:layout_margin="@dimen/button_margin"
+        android:backgroundTint="@color/colorActionBtn"
+        app:layout_constraintHorizontal_weight="1"
+        android:text="@string/equal"
+        android:textSize="@dimen/button_text_size" />
+</androidx.constraintlayout.widget.ConstraintLayout>

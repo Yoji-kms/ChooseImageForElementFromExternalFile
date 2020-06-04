@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="main_text_view_height">70dp</dimen>
+    <dimen name="small_text_view_heght">25dp</dimen>
+    <dimen name="main_text_size">60sp</dimen>
+    <dimen name="small_text_size">20sp</dimen>
+    <dimen name="toolbar_height">50dp</dimen>
+    <dimen name="button_margin">5dp</dimen>
+    <dimen name="button_width">0dp</dimen>
+    <dimen name="button_height">80dp</dimen>
+    <dimen name="button_text_size">40sp</dimen>
+    <integer name="popup_width_percent">90</integer>
+</resources>

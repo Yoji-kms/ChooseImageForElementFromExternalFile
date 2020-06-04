@@ -1,0 +1,52 @@
+<resources>
+    <string name="app_name">Calculator</string>
+    <string name="zero" translatable="false">0</string>
+    <string name="one" translatable="false">1</string>
+    <string name="two" translatable="false">2</string>
+    <string name="three" translatable="false">3</string>
+    <string name="four" translatable="false">4</string>
+    <string name="five" translatable="false">5</string>
+    <string name="six" translatable="false">6</string>
+    <string name="seven" translatable="false">7</string>
+    <string name="eight" translatable="false">8</string>
+    <string name="nine" translatable="false">9</string>
+    <string name="dot" translatable="false">.</string>
+    <string name="equal" translatable="false">=</string>
+    <string name="sum" translatable="false">+</string>
+    <string name="sub" translatable="false">-</string>
+    <string name="div" translatable="false">÷</string>
+    <string name="mul" translatable="false">×</string>
+    <string name="clear" translatable="false">C</string>
+    <string name="sign" translatable="false">±</string>
+    <string name="percent" translatable="false">%</string>
+
+    <string name="memory_clear" translatable="false">MC</string>
+    <string name="memori_plus" translatable="false">M+</string>
+    <string name="memory_minus" translatable="false">M-</string>
+    <string name="memory_restore" translatable="false">MR</string>
+    <string name="sin" translatable="false">sin</string>
+    <string name="cos" translatable="false">cos</string>
+    <string name="tan" translatable="false">tan</string>
+    <string name="arcsin" translatable="false">sin¯¹</string>
+    <string name="arccos" translatable="false">cos¯¹</string>
+    <string name="arctan" translatable="false">tan¯¹</string>
+    <string name="pi" translatable="false">π</string>
+    <string name="exp" translatable="false">e</string>
+    <string name="pow" translatable="false">xⁿ</string>
+    <string name="sqr" translatable="false">x²</string>
+    <string name="inv" translatable="false">x¯¹</string>
+    <string name="log_dec" translatable="false">lg</string>
+    <string name="log_e" translatable="false">ln</string>
+    <string name="log_two" translatable="false">log₂</string>
+    <string name="factorial" translatable="false">x!</string>
+    <string name="sqr_root" translatable="false">√x</string>
+
+    <string name="division_by_zero_message">Division by zero is impossible</string>
+    <string name="background_image" translatable="false">Backgroung image</string>
+    <string name="settings">Settings</string>
+    <string name="enter_background_image_file_name">Enter background image file name:</string>
+    <string name="file_name">File name</string>
+    <string name="ok" translatable="false">OK</string>
+    <string name="cancel">Cancel</string>
+    <string name="image_file_does_not_exist">Image file does not exist</string>
+</resources>
