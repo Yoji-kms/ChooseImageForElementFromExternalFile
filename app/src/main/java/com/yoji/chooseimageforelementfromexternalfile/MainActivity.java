@@ -12,7 +12,6 @@ import android.os.Environment;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -90,12 +89,7 @@ public class MainActivity extends AppCompatActivity {
         }
     };
 
-    private View.OnClickListener clearBtnOnClickListener = new View.OnClickListener() {
-        @Override
-        public void onClick(View v) {
-            clear();
-        }
-    };
+    private View.OnClickListener clearBtnOnClickListener = v -> clear();
 
     private View.OnClickListener numBtnOnClickListener = new View.OnClickListener() {
         @Override
@@ -203,7 +197,7 @@ public class MainActivity extends AppCompatActivity {
             Blurry.with(MainActivity.this)
                     .sampling(100)
                     .color(Color.DKGRAY)
-                    .onto((ViewGroup) findViewById(R.id.coordinatorLayoutId));
+                    .onto(findViewById(R.id.coordinatorLayoutId));
             startActivityForResult(intent, RequestCode.IMAGE_FILE_NAME);
         }
         return super.onOptionsItemSelected(item);
@@ -252,7 +246,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        Blurry.delete((ViewGroup) findViewById(R.id.coordinatorLayoutId));
+        Blurry.delete(findViewById(R.id.coordinatorLayoutId));
     }
 
     private void init() {
@@ -364,7 +358,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void setBackgroundImage (String imageFileName){
-        File imageFile = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS), imageFileName);
+        File imageFile = new File(this.getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS), imageFileName);
         if (imageFile.exists()){
             SharedPreferences.Editor editor = sharedPreferences.edit();
             editor.putString(IMAGE_KEY, imageFileName);
@@ -383,7 +377,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void createExternalImage (int imageId, String fileName){
         Bitmap image = BitmapFactory.decodeResource(getResources(), imageId);
-        File imageFile = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS), fileName);
+        File imageFile = new File(this.getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS), fileName);
         if (!imageFile.exists()){
             try {
                 FileOutputStream fileOutputStream = new FileOutputStream(imageFile);
