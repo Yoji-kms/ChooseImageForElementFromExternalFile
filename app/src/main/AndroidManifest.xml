@@ -23,8 +23,5 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".PopupChangeBackgroundImage"
-            android:theme="@style/AppTheme.PopupStyle">
-        </activity>
     </application>
 </manifest>

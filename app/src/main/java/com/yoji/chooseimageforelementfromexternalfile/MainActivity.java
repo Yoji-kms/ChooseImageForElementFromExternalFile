@@ -1,14 +1,15 @@
 package com.yoji.chooseimageforelementfromexternalfile;
 
 import android.Manifest;
+import android.content.ContentResolver;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.Color;
+import android.net.Uri;
 import android.os.Bundle;
-import android.os.Environment;
+import android.os.ParcelFileDescriptor;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -24,11 +25,11 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-
-import jp.wasabeef.blurry.Blurry;
+import java.io.FileDescriptor;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.util.Objects;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -44,6 +45,10 @@ public class MainActivity extends AppCompatActivity {
     private boolean secondNumFlag = false;
     private SharedPreferences sharedPreferences;
     private String IMAGE_KEY = "image_key";
+    private int imagesCreatedCounter;
+    int IMAGE_URI = 10;
+    int CREATE_IMAGE_URI = 11;
+    int WRITE_STORAGE = 91;
 
     private View.OnClickListener signBtnOnClickListener = new View.OnClickListener() {
         @Override
@@ -160,7 +165,7 @@ public class MainActivity extends AppCompatActivity {
                 if (secondNumFlag) {
                     calcTxt = String.valueOf(equal(calcTxt));
                     calcTxtStringBuilder.setLength(0);
-                }else{
+                } else {
                     calcTxt = calcMainTxtView.getText().toString();
                 }
                 calcTxtStringBuilder.setLength(0);
@@ -192,13 +197,11 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        if (item.getItemId() == R.id.select_background_picture){
-            Intent intent = new Intent(MainActivity.this, PopupChangeBackgroundImage.class);
-            Blurry.with(MainActivity.this)
-                    .sampling(100)
-                    .color(Color.DKGRAY)
-                    .onto(findViewById(R.id.coordinatorLayoutId));
-            startActivityForResult(intent, RequestCode.IMAGE_FILE_NAME);
+        if (item.getItemId() == R.id.select_background_picture) {
+            Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
+            intent.addCategory(Intent.CATEGORY_OPENABLE);
+            intent.setType("image/*");
+            startActivityForResult(intent, IMAGE_URI);
         }
         return super.onOptionsItemSelected(item);
     }
@@ -207,11 +210,24 @@ public class MainActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if (requestCode == RequestCode.IMAGE_FILE_NAME && resultCode == RESULT_OK){
-            assert data != null;
-            String imageFileName = data.getStringExtra("result");
+        if (requestCode == IMAGE_URI && resultCode == RESULT_OK) {
+            if (data != null) {
+                Uri uri = data.getData();
 
-            setBackgroundImage(imageFileName);
+                SharedPreferences.Editor editor = sharedPreferences.edit();
+                editor.putString(IMAGE_KEY, Objects.requireNonNull(uri).toString());
+                editor.apply();
+
+                setBackgroundImage(uri);
+            }
+        }
+
+        if (requestCode == CREATE_IMAGE_URI && resultCode == RESULT_OK) {
+            if (data != null) {
+                Uri uri = data.getData();
+
+                createExternalImages(uri);
+            }
         }
     }
 
@@ -232,21 +248,11 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        boolean permissionGranted = permissionRequest();
-        if (!permissionGranted){
-            finish();
-        }
+        permissionRequest();
 
-        createSomeExternalImages();  //Создаёт 2 файла 1.jpg и 2.jpg из drawable ресурсов
         init();
         setBackgroundImageFromSharedPrefs();
         setSupportActionBar(toolbar);
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        Blurry.delete(findViewById(R.id.coordinatorLayoutId));
     }
 
     private void init() {
@@ -305,7 +311,7 @@ public class MainActivity extends AppCompatActivity {
         sharedPreferences = getSharedPreferences("Image", MODE_PRIVATE);
     }
 
-    private float equal(String calcTxt){
+    private float equal(String calcTxt) {
         float result = 0;
 
         String calcSmallTxt = calcSmallTxtView.getText().toString();
@@ -314,9 +320,9 @@ public class MainActivity extends AppCompatActivity {
         action = calcSmallTxtSplit[1];
         float secondNum = Float.parseFloat(calcTxt);
 
-        switch (action){
+        switch (action) {
             case "÷":
-                if (secondNum !=0) {
+                if (secondNum != 0) {
                     result = firstNum / secondNum;
                 } else {
                     clear();
@@ -338,7 +344,7 @@ public class MainActivity extends AppCompatActivity {
         return result;
     }
 
-    private void clear(){
+    private void clear() {
         calcTxtStringBuilder.setLength(0);
         calcSmallTxtView.setText("");
         calcMainTxtView.setText("");
@@ -347,51 +353,99 @@ public class MainActivity extends AppCompatActivity {
         secondNumFlag = false;
     }
 
-    private boolean permissionRequest(){
-        int permissionStatus = ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE);
-        if (permissionStatus == PackageManager.PERMISSION_DENIED) {
-            ActivityCompat.requestPermissions(this,
-                    new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},
-                    RequestCode.READ_STORAGE);
+    private void createSomeExternalImages() {
+        createExternalImageStartActivity(1);
+        createExternalImageStartActivity(2);
+    }
+
+    private void createExternalImageStartActivity(int id) {
+        Intent intent = new Intent(Intent.ACTION_CREATE_DOCUMENT);
+        intent.setType("image/jpg");
+        intent.putExtra(Intent.EXTRA_TITLE, "Sandman_" + id + ".jpg");
+        startActivityForResult(intent, CREATE_IMAGE_URI);
+    }
+
+    private void createExternalImages(Uri uri) {
+        int resId;
+        switch (imagesCreatedCounter) {
+            default:
+            case 0:
+                resId = R.drawable.sandman_jap_1;
+                imagesCreatedCounter++;
+                break;
+            case 1:
+                resId = R.drawable.sandman_jap_2;
+                break;
         }
-        return permissionStatus == PackageManager.PERMISSION_GRANTED;
-    }
 
-    private void setBackgroundImage (String imageFileName){
-        File imageFile = new File(this.getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS), imageFileName);
-        if (imageFile.exists()){
-            SharedPreferences.Editor editor = sharedPreferences.edit();
-            editor.putString(IMAGE_KEY, imageFileName);
-            editor.apply();
-            Bitmap image = BitmapFactory.decodeFile(imageFile.getAbsolutePath());
-            backgroundImageView.setImageBitmap(image);
-        }else{
-            Toast.makeText(this, getString(R.string.image_file_does_not_exist), Toast.LENGTH_SHORT).show();
-        }
-    }
+        Bitmap image = BitmapFactory.decodeResource(getResources(), resId);
 
-    private void createSomeExternalImages(){
-        createExternalImage(R.drawable.sandman_jap_1, "1.jpg");
-        createExternalImage(R.drawable.sandman_jap_2, "2.jpg");
-    }
+        final ContentResolver resolver = getApplicationContext().getContentResolver();
 
-    private void createExternalImage (int imageId, String fileName){
-        Bitmap image = BitmapFactory.decodeResource(getResources(), imageId);
-        File imageFile = new File(this.getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS), fileName);
-        if (!imageFile.exists()){
-            try {
-                FileOutputStream fileOutputStream = new FileOutputStream(imageFile);
-                image.compress(Bitmap.CompressFormat.JPEG, 100, fileOutputStream);
-            } catch (FileNotFoundException e) {
+        if (readImageFromUri(uri) == null) {
+            try (OutputStream stream = resolver.openOutputStream(Objects.requireNonNull(uri))) {
+                image.compress(Bitmap.CompressFormat.JPEG, 100, stream);
+            } catch (IOException e) {
+                if (uri != null) {
+                    resolver.delete(Objects.requireNonNull(uri), null, null);
+                }
                 e.printStackTrace();
             }
         }
     }
 
-    private void setBackgroundImageFromSharedPrefs(){
-        String imageFileName = sharedPreferences.getString(IMAGE_KEY, "");
-        if (!imageFileName.matches("")){
-            setBackgroundImage(imageFileName);
+    private void setBackgroundImageFromSharedPrefs() {
+        String imagePath = sharedPreferences.getString(IMAGE_KEY, "");
+        if (!imagePath.matches("")) {
+            Uri imageUri = Uri.parse(imagePath);
+            setBackgroundImage(imageUri);
+        }
+    }
+
+    private void setBackgroundImage(Uri uri) {
+        try (ParcelFileDescriptor parcelFileDescriptor =
+                     getContentResolver().openFileDescriptor(Objects.requireNonNull(uri), "r")) {
+            FileDescriptor fileDescriptor = Objects.requireNonNull(parcelFileDescriptor).getFileDescriptor();
+            Bitmap bitmap = BitmapFactory.decodeFileDescriptor(fileDescriptor);
+            backgroundImageView.setImageBitmap(bitmap);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void permissionRequest() {
+        int permissionStatus = ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE);
+        if (permissionStatus == PackageManager.PERMISSION_DENIED) {
+            ActivityCompat.requestPermissions(this,
+                    new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},
+                    WRITE_STORAGE);
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+
+        if (requestCode != WRITE_STORAGE) {
+            return;
+        }
+
+        int grantResult = grantResults[0];
+        switch (grantResult) {
+            case PackageManager.PERMISSION_GRANTED:
+                createSomeExternalImages();  //Создаёт 2 файла 1.jpg и 2.jpg из drawable ресурсов
+                break;
+            case PackageManager.PERMISSION_DENIED:
+                Toast.makeText(this, getString(R.string.toast_message_did_not_create_files),
+                        Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    private Bitmap readImageFromUri(Uri uri) {
+        try (InputStream stream = getContentResolver().openInputStream(uri)) {
+            return BitmapFactory.decodeStream(stream);
+        } catch (IOException e) {
+            return null;
         }
     }
 }
