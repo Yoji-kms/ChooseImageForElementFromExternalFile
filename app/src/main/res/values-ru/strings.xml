@@ -3,5 +3,4 @@
     <string name="app_name">Калькулятор</string>
     <string name="division_by_zero_message">Деление на ноль невозможно</string>
     <string name="settings">Настройки</string>
-    <string name="toast_message_did_not_create_files">В разрешении отказано. Нет возможности создать файлы</string>
 </resources>

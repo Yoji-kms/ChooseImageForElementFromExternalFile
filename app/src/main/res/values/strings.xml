@@ -44,5 +44,4 @@
     <string name="division_by_zero_message">Division by zero is impossible</string>
     <string name="background_image" translatable="false">Backgroung image</string>
     <string name="settings">Settings</string>
-    <string name="toast_message_did_not_create_files">Permission denied. Did not create custom image files</string>
 </resources>

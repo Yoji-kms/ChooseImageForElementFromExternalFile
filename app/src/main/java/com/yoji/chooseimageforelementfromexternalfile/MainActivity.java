@@ -1,10 +1,8 @@
 package com.yoji.chooseimageforelementfromexternalfile;
 
-import android.Manifest;
 import android.content.ContentResolver;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
@@ -22,8 +20,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
 
 import java.io.FileDescriptor;
 import java.io.IOException;
@@ -44,11 +40,10 @@ public class MainActivity extends AppCompatActivity {
     private boolean sign = false;
     private boolean secondNumFlag = false;
     private SharedPreferences sharedPreferences;
-    private String IMAGE_KEY = "image_key";
+    private final String IMAGE_KEY = "image_key";
     private int imagesCreatedCounter;
-    int IMAGE_URI = 10;
-    int CREATE_IMAGE_URI = 11;
-    int WRITE_STORAGE = 91;
+    private final int IMAGE_URI = 10;
+    private  final int CREATE_IMAGE_URI = 11;
 
     private View.OnClickListener signBtnOnClickListener = new View.OnClickListener() {
         @Override
@@ -248,9 +243,14 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        permissionRequest();
-
         init();
+        String FIRST_START_FLAG = "first_start_flag";
+        if (sharedPreferences.getBoolean(FIRST_START_FLAG, true)) {
+            createSomeExternalImages();  //Создаёт 2 файла 1.jpg и 2.jpg из drawable ресурсов
+            SharedPreferences.Editor editor = sharedPreferences.edit();
+            editor.putBoolean(FIRST_START_FLAG, false);
+            editor.apply();
+        }
         setBackgroundImageFromSharedPrefs();
         setSupportActionBar(toolbar);
     }
@@ -410,34 +410,6 @@ public class MainActivity extends AppCompatActivity {
             backgroundImageView.setImageBitmap(bitmap);
         } catch (Exception e) {
             e.printStackTrace();
-        }
-    }
-
-    public void permissionRequest() {
-        int permissionStatus = ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE);
-        if (permissionStatus == PackageManager.PERMISSION_DENIED) {
-            ActivityCompat.requestPermissions(this,
-                    new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},
-                    WRITE_STORAGE);
-        }
-    }
-
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-
-        if (requestCode != WRITE_STORAGE) {
-            return;
-        }
-
-        int grantResult = grantResults[0];
-        switch (grantResult) {
-            case PackageManager.PERMISSION_GRANTED:
-                createSomeExternalImages();  //Создаёт 2 файла 1.jpg и 2.jpg из drawable ресурсов
-                break;
-            case PackageManager.PERMISSION_DENIED:
-                Toast.makeText(this, getString(R.string.toast_message_did_not_create_files),
-                        Toast.LENGTH_SHORT).show();
         }
     }
 
